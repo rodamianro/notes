@@ -4,136 +4,115 @@ Apuntes sobre drupal
 # Contenido
 - [Drupal](#drupal)
 - [Contenido](#contenido)
-- [Consideraciones al crear código para drupal](#consideraciones-al-crear-código-para-drupal)
-  - [Patrones de diseño](#patrones-de-diseño)
-    - [1. Factory](#1-factory)
-    - [2. Singleton](#2-singleton)
-  - [3. Strategy](#3-strategy)
-    - [Front Controller](#front-controller)
+- [Arquitectura](#arquitectura)
+  - [Núcleo](#núcleo)
+  - [Modulos](#modulos)
+  - [Área de administración](#área-de-administración)
+  - [Nodos y tipos de contenido](#nodos-y-tipos-de-contenido)
+  - [Entidades y campos](#entidades-y-campos)
+  - [Menús](#menús)
+  - [Bloques](#bloques)
+  - [Temas](#temas)
+  - [Usuarios, roles y permisos](#usuarios-roles-y-permisos)
+  - [Taxonomía](#taxonomía)
+  - [Estructura de archivos básica](#estructura-de-archivos-básica)
+- [Trabajar en local](#trabajar-en-local)
+  - [Desde pantheon](#desde-pantheon)
+    - [Descargas](#descargas)
+    - [Configuración inicial](#configuración-inicial)
+- [Adicionales](#adicionales)
+  - [Hooks](#hooks)
 
-# Consideraciones al crear código para drupal
-
-## Patrones de diseño
-
-### 1. Factory
-Se crea una clase que solo cree el objeto que se quiere usar, esto permite que dado el caso que se tenga que cambiar la clase Automobile, solo se haga en la clase Factory, otro beneficio podria ser al momento de que la creación de una clase se un trabajo complicado, se puede delegar este trabajo a la clase fatory
-```php
-<?php
-class Automobile
-{
-    private $vehicleMake;
-    private $vehicleModel;
-
-    public function __construct($make, $model)
-    {
-        $this->vehicleMake = $make;
-        $this->vehicleModel = $model;
-    }
-
-    public function getMakeAndModel()
-    {
-        return $this->vehicleMake . ' ' . $this->vehicleModel;
-    }
-}
-
-class AutomobileFactory
-{
-    public static function create($make, $model)
-    {
-        return new Automobile($make, $model);
-    }
-}
-
-// have the factory create the Automobile object
-$veyron = AutomobileFactory::create('Bugatti', 'Veyron');
-
-print_r($veyron->getMakeAndModel()); // outputs "Bugatti Veyron"
+# Arquitectura
+## Núcleo
+Base necesaria para el funcionamiento y para la incorporación del resto de componentes de la arquitectura
+## Modulos
+Los módulos aportan funcionalidades adicionales al núcleo de Drupal
+## Área de administración
+El menú de administración se divice en grupos de tareas: Contendio, Estructura, Apariencia, Extender(Módulos), Configuración, Usuarios, Informes y Ayuda 
+## Nodos y tipos de contenido
+Los tipos de contendio en drupal derivan de un tipo de contenido básico denomindado <strong>nodo</strong>
+## Entidades y campos
+Las entidades son elementos a los que se les puede añadir campos de información de diferentes tipos, su propocito es homogeneizar la gestión y presentación de campos adicionales
+## Menús 
+Facilitan la organización de los nodos publicados
+## Bloques
+Son contendios principalmente dinámicos que se pueden habilitar en distintas zonas(regiones) del tema del sitio
+## Temas
+El tema define el diseño específico para el sitio web. Mediante el uso de temas, Drupal separa los contenidos del diseño.
+Los temas se dividen en regiones, que son áreas diferenciadas en las que se puede colocar contenido
+## Usuarios, roles y permisos
+El control de acceso a las diferentes funcionalidades del sitio se realizan a través de los roles y permisos. Un rol es un conjunto de permisos.
+## Taxonomía
+Permite la clasificación de los contendios del sitio el módulo Taxonomy esta contruido por dos elementos: Los <strong>vocabularios</strong> (o categorías) y los <strong>términos</strong> (o etiquetas). Cada vocabulario puede agrupar a uno o más terminos.
+## Estructura de archivos básica
 ```
-### 2. Singleton
-El patron singleton es util cuando necesitamos asegurarnos de tener una unica instancia de una clase unicamente para manejar el ciclo completo de peticiones en una aplicación web
-```php
-<?php
-class Singleton
-{
-    private static $instance = null;
+|--- Proyecto_Drupal/
+     |--- sites/
+     |--- core/
+     |--- modules/
+          |--- contrib/
+          |--- custom/
+     |--- themes/
+          |--- contrib/
+          |--- custom/
+```  
+- ### sites/
+    Se almacenan los datos de configuración del sitio y archivos
+- ### core/
+    Contiene los archivos del núcleo.
+- ### modules/
+    Se almacenan los módulos contrubuidos y los módulos personalizados
+- ### themes/
+    Se almacenan los temas contribuidos y los temas personalizados
 
-    private function __construct() {}
 
-    public static function getInstance(): self
-    {
-        if (null === self::$instance) {
-            self::$instance = new self();
-        }
 
-        return self::$instance;
-    }
-}
+
+
+
+# Trabajar en local
+## Desde pantheon
+### Descargas
+1. Descargar la base de datos
+2. Descargar el repositorio de codigo
+3. Descargar los archivos sftp
+### Configuración inicial
+1. Instalar las dependencias con composer
+```sh
+$ composer install
 ```
-## 3. Strategy
-Con el patron strategy puedes encapsular conjuntos especificos de algoritmos haciendo a la clase cliente la responsable por la instaciacion de un algoritmo en particular sin tener conocimiento de su actual implementación
-```php
-<?php
-interface OutputInterface
-{
-    public function load();
-}
-
-class SerializedArrayOutput implements OutputInterface
-{
-    public function load()
-    {
-        return serialize($arrayOfData);
-    }
-}
-
-class JsonStringOutput implements OutputInterface
-{
-    public function load()
-    {
-        return json_encode($arrayOfData);
-    }
-}
-
-class ArrayOutput implements OutputInterface
-{
-    public function load()
-    {
-        return $arrayOfData;
-    }
-}
-``` 
-Encapsulando los algoritmos los hace mas faciles y claros en tu código para que otros desarrolladores puedan facilmente agregar tipo de outputs sin afectar el código del cliente.
-Veras como en cada clase output en concreto implementa una OutputInterface, esto sirve para 2 propositos.
-
-1. Proveer un contrato simple el cual debe ser obedecido por cualquie nueva implementación.
-2. Por la implementación de una interfaz común te aseguras que las acciones del cliente sean del tipo correcto
-
-```php
-<?php
-class SomeClient
-{
-    private $output;
-
-    public function setOutput(OutputInterface $outputType)
-    {
-        $this->output = $outputType;
-    }
-
-    public function loadOutput()
-    {
-        return $this->output->load();
-    }
-}
-
-$client = new SomeClient();
-
-// Want an array?
-$client->setOutput(new ArrayOutput());
-$data = $client->loadOutput();
-
-// Want some JSON?
-$client->setOutput(new JsonStringOutput());
-$data = $client->loadOutput();
+2. Instalar drush (En caso de no estarlo ya)
+```sh
+$ composer require drush/drush
 ```
-### Front Controller 
-El patron front Controller se utiliza cuando se tiene un unico punto de entrada a la aplicación web, este maneja todas las peticiones. Este código es responsable por la carga de todas las dependencias, procesamiento de peticiones y envio de respuestas al navegador. Este patron puede ser beneficioso porque fomenta el codigo modular y brinda lugar central donde se conecta el codigo que debe ejecutar cada petición
+3. Crear archivo setting.local.php en la ruta default/ con minimo el siguiente código
+```php
+// Configuración de la base de datos
+$databases['default']['default'] = [
+    'database' => '',
+    'username' => '',
+    'password' => '',
+    'host' => 'localhost',
+    'port' => '3306',
+    'driver' => 'mysql',
+    'prefix' => '',
+    'collation' => 'utf8mb4_general_ci',
+];
+// Hash-salt
+$settings['hash_salt'] = '1';
+```
+4. Crear archivo service.local.yml en la ruta default/ y copiar el contendio del archivo default.services.yml y cambiar las siguientes lineas
+```yml
+debug: true
+cache: false
+```
+5. En caso de no existir la carpeta config en la ruta default/, crearla
+6. Ejecutar los comandos drush [(más información)](drush.md)
+  ```sh
+  $ vendor/bin/drush cr
+  $ vendor/bin/drush updb
+  ```
+# Adicionales
+## Hooks 
+Permiten a los módulos interactura con el core de Drupal. [Más información](https://api.drupal.org/api/drupal/includes!module.inc/group/hooks/7.x)
