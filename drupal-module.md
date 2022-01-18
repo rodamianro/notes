@@ -6,7 +6,7 @@ Son elementos que permiten agregar funcionalidades a Drupal.
 |--- modules/
 |    |--- custom/
 |        |--- nombre_modulo/
-|             |--- src
+|             |--- src/
 |                  |--- Controller/
 |                  |--- Form/
 |                  |--- Plugin/
@@ -16,7 +16,7 @@ Son elementos que permiten agregar funcionalidades a Drupal.
 ```
 # Módulo basico
 ## 1.  custom/nombre_modulo: 
-La creación del módulo empienza eligiendo el nombre de maquina del módulo que para este caso es nombre_modulo y creando una carpeta en al ruta modules/custom/nombre_modulo
+La creación del módulo empieza eligiendo el nombre de maquina del módulo que para este caso es nombre_modulo y creando una carpeta en al ruta modules/custom/nombre_modulo
 
 ## 2. nombre_modulo.info.yml: 
 Es parte escencial de los modulos, temas o perfiles de instalación de drupal ya que almacenan los metadatos sobre el proyecto.
@@ -47,11 +47,11 @@ En primer lugar necesitas declarar la ruta en nombre_modulo.routing.yml, además
   ```yml
   nombre_modulo.page:
     path: '/page'
-    default:
+    defaults:
       _controller: '\Drupal\nombre_modulo\Controller\NombreModuloController::page'
       _title: 'Pagina del módulo de prueba'
     requirements:
-      __permission: 'access content'
+      _permission: 'access content'
   ```
   > - nombre_modulo.page: Es el nombre de máquina de la ruta. Por convención, este debe ser nombre_modulo.sub_name
   > - path: Da la url a la pagina en tu sitio
@@ -78,7 +78,7 @@ En primer lugar necesitas declarar la ruta en nombre_modulo.routing.yml, además
     * @return array
     *   A simple renderable array.
     */
-    public function Page() {
+    public function page() {
       return [
         '#markup' => 'Hola, mundo',
       ];
@@ -94,7 +94,7 @@ En primer lugar necesitas declarar la ruta en nombre_modulo.routing.yml, además
 ## Array de renderizado [[2]](https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Render!theme.api.php/group/theme_render/8.2.x)
 Es un bloque de contrucción de pagina de drupal. Es un array asociativo jerárquico que contiene la información y las propiedades que describen como estas deben ser renderizada.
 
-Cada nivel de jerárquia de un array de renderizado tiene uno o mas arrays de elementos. Los nombres de los arrays de elementos que empiezan con **#** son conocidos como "propiedades", y los arrays de elementos con otros nombres son "hijos"; Los nombres de los hijos son más flexibles, mientras que los nombres de las propiedades son especificos del Render API y el tipo particular de información que se esta procesando. Un caso especial de array de renderizado es el array para formulario, el cual especifica los elementos del formulario para un formulario HTML. <u>[Ver más](https://api.drupal.org/api/drupal/core%21core.api.php/group/form_api/8.2.x)
+Cada nivel de jerárquia de un array de renderizado tiene uno o mas arrays de elementos. Los nombres de los arrays de elementos que empiezan con **#** son conocidos como "propiedades", y los arrays de elementos con otros nombres son "hijos"; Los nombres de los hijos son más flexibles, mientras que los nombres de las propiedades son especificos del Render API y el tipo particular de información que se esta procesando. Un caso especial de array de renderizado es el array para formulario, el cual especifica los elementos del formulario para un formulario HTML. <u>[Ver más](https://api.drupal.org/api/drupal/core%21core.api.php/group/form_api/8.2.x)</u>
 
 Los arrays de renderizado suelen tener una de las siguientes propiedades definidas:
 - \#type: Especifica la información del contendio y las opciones particulares del tipo de elemento a renderzar (form, textfield, submit, table)

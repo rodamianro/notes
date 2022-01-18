@@ -20,6 +20,7 @@ Apuntes sobre drupal
   - [Desde pantheon](#desde-pantheon)
     - [Descargas](#descargas)
     - [Configuración inicial](#configuración-inicial)
+- [Actualizar core de drupal con Composer](#actualizar-core-de-drupal-con-composer)
 - [Adicionales](#adicionales)
   - [Hooks](#hooks)
 
@@ -66,11 +67,6 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
 - ### themes/
     Se almacenan los temas contribuidos y los temas personalizados
 
-
-
-
-
-
 # Trabajar en local
 ## Desde pantheon
 ### Descargas
@@ -79,40 +75,58 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
 3. Descargar los archivos sftp
 ### Configuración inicial
 1. Instalar las dependencias con composer
-```sh
-$ composer install
-```
+    ```sh
+    $ composer install
+    ```
 2. Instalar drush (En caso de no estarlo ya)
-```sh
-$ composer require drush/drush
-```
-3. Crear archivo setting.local.php en la ruta default/ con minimo el siguiente código
-```php
-// Configuración de la base de datos
-$databases['default']['default'] = [
-    'database' => '',
-    'username' => '',
-    'password' => '',
-    'host' => 'localhost',
-    'port' => '3306',
-    'driver' => 'mysql',
-    'prefix' => '',
-    'collation' => 'utf8mb4_general_ci',
-];
-// Hash-salt
-$settings['hash_salt'] = '1';
-```
-4. Crear archivo service.local.yml en la ruta default/ y copiar el contendio del archivo default.services.yml y cambiar las siguientes lineas
-```yml
-debug: true
-cache: false
-```
+    ```sh
+    $ composer require drush/drush
+    ```
+3. Crear archivo settings.local.php en la ruta default/ con minimo el siguiente código
+    ```php
+    // Configuración de la base de datos
+    $databases['default']['default'] = [
+        'database' => '',
+        'username' => '',
+        'password' => '',
+        'host' => 'localhost',
+        'port' => '3306',
+        'driver' => 'mysql',
+        'prefix' => '',
+        'collation' => 'utf8mb4_general_ci',
+    ];
+    // Hash-salt
+    $settings['hash_salt'] = '1';
+    ```
+4. Crear archivo services.local.yml en la ruta default/ y copiar el contendio del archivo default.services.yml y cambiar las siguientes lineas
+    ```yml
+    debug: true
+    cache: false
+    ```
 5. En caso de no existir la carpeta config en la ruta default/, crearla
 6. Ejecutar los comandos drush [(más información)](drush.md)
-  ```sh
-  $ vendor/bin/drush cr
-  $ vendor/bin/drush updb
-  ```
+    ```sh
+    $ vendor/bin/drush cr
+    $ vendor/bin/drush updb
+    ```
+# Actualizar core de drupal con Composer
+1.  Listar las actualizaciones disponibles para drupal
+    ```sh
+      $ composer outdated "drupal/*"
+    ```
+2. Verificar la versión de drupal que se usa
+    ```sh
+      $ composer show drupal/core-recommended
+    ```
+3. Descargar la versión de drupal recomendada
+    ```
+      $ composer update drupal/core "drupal/core-*" --with-all-dependencies
+    ```
+4. Actualizar la base de datos y limpiar la cache
+    ```sh
+      $ vendor/bin/drush cr
+      $ vendor/bin/drush updb
+    ```
 # Adicionales
 ## Hooks 
 Permiten a los módulos interactura con el core de Drupal. [Más información](https://api.drupal.org/api/drupal/includes!module.inc/group/hooks/7.x)
