@@ -21,3 +21,8 @@ Es un shell de linea de comandos y una interfaz de scripting Unix para Drupal
     ```
     $ drush cim
     ```
+- ## config-delete nombre.configuracion
+    Elimina una configuración especifica
+    ```
+    $ drush config-delete nombre.configuracion
+    ```

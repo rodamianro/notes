@@ -20,7 +20,7 @@ Apuntes sobre drupal
   - [Desde pantheon](#desde-pantheon)
     - [Descargas](#descargas)
     - [Configuración inicial](#configuración-inicial)
-- [Actualizar core de drupal con Composer](#actualizar-core-de-drupal-con-composer)
+- [Como Actualizar core de drupal con Composer](#como-actualizar-core-de-drupal-con-composer)
 - [Adicionales](#adicionales)
   - [Hooks](#hooks)
 
@@ -98,6 +98,15 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
     // Hash-salt
     $settings['hash_salt'] = '1';
     ```
+   3.1. Para un configuración más avanzada, copiar el contendio del archivo example.settings.local.php que se encuentran en la carpeta /sites, y descomentar las siguientes lineas:
+   ```php
+   $settings['cache']['bins']['render'] = 'cache.backend.null';
+   $settings['cache']['bins']['discovery_migration'] = 'cache.backend.memory';
+   $settings['cache']['bins']['page'] = 'cache.backend.null';
+   $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
+   ```
+   Adicional debe agregar la configuración de la base de datos anteriormente mencionada, esta configuración permite realizar cambios en drupal y que estos se actualicen sin tener que utilizar drush cr
+
 4. Crear archivo services.local.yml en la ruta default/ y copiar el contendio del archivo default.services.yml y cambiar las siguientes lineas
     ```yml
     debug: true
@@ -109,7 +118,7 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
     $ vendor/bin/drush cr
     $ vendor/bin/drush updb
     ```
-# Actualizar core de drupal con Composer
+# Como Actualizar core de drupal con Composer
 1.  Listar las actualizaciones disponibles para drupal
     ```sh
       $ composer outdated "drupal/*"
