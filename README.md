@@ -1,7 +1,6 @@
 # Apuntes
 Apuntes de diferentes tematicas
 
-# Directorio de notas
-- ## [Patrones de desarrollo](patterns.md)
-- ## [Drupal](drupal.md)
-- ## [Drush](drush.md)
+## 1. [Drupal](drupal/index.md)
+## 2. [AWS](aws/index.md)
+## 3. [Generalidades](generalidades/index.md)
