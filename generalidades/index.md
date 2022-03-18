@@ -1,2 +1,3 @@
 # Indice
-## 1. [Terminal y linea de comando](terminal-linea-comandos)
+- ## [Terminal y linea de comando](terminal-linea-comandos)
+- ## [Xampp](xampp.md)
