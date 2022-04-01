@@ -47,3 +47,29 @@ Caracteres que ayudan en las busquedas y filtrado de buscqueda
 - ls datos?: Busca todas las palabras que tengan datos al inicio y solo un caracter al final, para 3 caracteres seria ls datos???
 - ls [[:upper:]]*: Busca todos los contenidos que empiecen con mayusculas
 - ls [ad]*: Busca todos los archivos que empiezan con ab
+# Redirecciones
+## File Descriptor
+- 0: Standard input, salida de información para el input
+- 1: Standard output, salida de información para el output
+- 2: Standard error, salida de información para los errores
+
+## > 
+Guarda el output de la operación en un un archivo, creándolo o si existe lo sobrescribe
+```sh
+ls carpeta > listadoArchivos.txt
+```
+## >> 
+Guarda el output de la operación en un un archivo, concatena el contenido en el archivo
+```sh
+ls carpeta2 >> listadoArchivos.txt
+```
+## 2>
+Guarda en un archivo el error que arroje la operación
+```
+ls alskdjf 2> error.txt
+```
+## >> 2>&1
+Redireccionar un error y un output
+```
+ls alsdkfj >> output.txt 2>&1
+```
