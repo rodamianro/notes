@@ -25,28 +25,51 @@ Apuntes sobre drupal
   - [Hooks](#hooks)
 
 # Arquitectura
+
 ## Núcleo
+
 Base necesaria para el funcionamiento y para la incorporación del resto de componentes de la arquitectura
+
 ## Modulos
+
 Los módulos aportan funcionalidades adicionales al núcleo de Drupal
+
 ## Área de administración
+
 El menú de administración se divice en grupos de tareas: Contendio, Estructura, Apariencia, Extender(Módulos), Configuración, Usuarios, Informes y Ayuda 
+
 ## Nodos y tipos de contenido
+
 Los tipos de contendio en drupal derivan de un tipo de contenido básico denomindado <strong>nodo</strong>
+
 ## Entidades y campos
+
 Las entidades son elementos a los que se les puede añadir campos de información de diferentes tipos, su propocito es homogeneizar la gestión y presentación de campos adicionales
+
 ## Menús 
+
 Facilitan la organización de los nodos publicados
+
 ## Bloques
+
 Son contendios principalmente dinámicos que se pueden habilitar en distintas zonas(regiones) del tema del sitio
+
 ## Temas
+
 El tema define el diseño específico para el sitio web. Mediante el uso de temas, Drupal separa los contenidos del diseño.
 Los temas se dividen en regiones, que son áreas diferenciadas en las que se puede colocar contenido
+
 ## Usuarios, roles y permisos
+
 El control de acceso a las diferentes funcionalidades del sitio se realizan a través de los roles y permisos. Un rol es un conjunto de permisos.
+
 ## Taxonomía
-Permite la clasificación de los contendios del sitio el módulo Taxonomy esta contruido por dos elementos: Los <strong>vocabularios</strong> (o categorías) y los <strong>términos</strong> (o etiquetas). Cada vocabulario puede agrupar a uno o más terminos.
+
+Permite la clasificación de los contendios del sitio el módulo Taxonomy esta contruido por dos elementos: Los <strong>vocabularios</strong> (o categorías) y los <strong>términos</strong> (o etiquetas). Cada vocabulario puede agrupar a uno 
+o más terminos.
+
 ## Estructura de archivos básica
+
 ```
 |--- Proyecto_Drupal/
      |--- sites/
@@ -58,22 +81,35 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
           |--- contrib/
           |--- custom/
 ```  
+
 - ### sites/
+
     Se almacenan los datos de configuración del sitio y archivos
+
 - ### core/
+
     Contiene los archivos del núcleo.
+
 - ### modules/
+
     Se almacenan los módulos contrubuidos y los módulos personalizados
+
 - ### themes/
+
     Se almacenan los temas contribuidos y los temas personalizados
 
 # Trabajar en local
+
 ## Desde pantheon
+
 ### Descargas
+
 1. Descargar la base de datos
 2. Descargar el repositorio de codigo
 3. Descargar los archivos sftp
+
 ### Configuración inicial
+
 1. Instalar las dependencias con composer
     ```sh
     $ composer install
@@ -106,7 +142,10 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
    $settings['cache']['bins']['dynamic_page_cache'] = 'cache.backend.null';
    ```
    Adicional debe agregar la configuración de la base de datos anteriormente mencionada, esta configuración permite realizar cambios en drupal y que estos se actualicen sin tener que utilizar drush cr
-
+   3.2. Cambiar la ruta de las configuraciones por defecto
+   ```php
+   $settings['config_sync_directory'] = './config/sync/default';
+   ```
 4. Crear archivo services.local.yml en la ruta default/ y copiar el contendio del archivo default.services.yml y cambiar las siguientes lineas
     ```yml
     debug: true
@@ -118,7 +157,9 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
     $ vendor/bin/drush cr
     $ vendor/bin/drush updb
     ```
+
 # Como Actualizar core de drupal con Composer
+
 1.  Listar las actualizaciones disponibles para drupal
     ```sh
       $ composer outdated "drupal/*"
@@ -136,6 +177,9 @@ Permite la clasificación de los contendios del sitio el módulo Taxonomy esta c
       $ vendor/bin/drush cr
       $ vendor/bin/drush updb
     ```
+
 # Adicionales
+
 ## Hooks 
+
 Permiten a los módulos interactura con el core de Drupal. [Más información](https://api.drupal.org/api/drupal/includes!module.inc/group/hooks/7.x)
