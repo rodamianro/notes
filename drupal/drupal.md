@@ -21,6 +21,7 @@ Apuntes sobre drupal
     - [Descargas](#descargas)
     - [Configuración inicial](#configuración-inicial)
 - [Como Actualizar core de drupal con Composer](#como-actualizar-core-de-drupal-con-composer)
+- [Configuración de estandares de programación en el entorno local](#configuración-de-estandares-de-programación-en-el-entorno-local)
 - [Adicionales](#adicionales)
   - [Hooks](#hooks)
 
@@ -177,6 +178,51 @@ o más terminos.
       $ vendor/bin/drush cr
       $ vendor/bin/drush updb
     ```
+
+# Configuración de estandares de programación en el entorno local
+
+Para poder llevar un control de los estandares y lineamientos minimos esperados al programar modulos custom es recomendable utlizar las herramientas phpcs y phpcbf las cuales nos brindaran utilidades que podremos configurar que nos ayudara a tener siempre presente las buenas practicas y estandares esperados.
+
+Para instalar estas dos herramientas los paso son:
+
+1. Descargar la dependencia ya sea en un proyecto especifico o de manera global
+   ```sh
+   composer global require "squizlabs/php_codesniffer=*"
+   ```
+2. Actualizar el path que utilizara phpcs 
+   ```cmd
+   phpcs --config-set installed_paths C:\Users\[usuario_windows]\AppData\Roaming\Composer\vendor\drupal\coder\coder_sniffer
+   ```
+3. Instalar la guia de estilos de drupal
+   ```sh
+   composer global require drupal/coder
+   ```
+4. Comprobar guías de estilos instaladas
+   ```sh
+   phpcs -i
+   ```
+5. Configuración en visual studio code:
+   Para que vscode hay que agregar la configuración correspondiente, para ello cree una carpeta con el nombre .vscode con un archivo json que tenga como nombre settings.json en la raiz del proyecto
+   ```
+   |-- .vscode/
+       |-- settings.json
+   ```
+   Y agregue los siguiente atributos
+   ```json
+   {
+    "phpcs.enable": true,
+    "phpcs.executablePath": "C:/Users/USUARIO/AppData/Roaming/Composer/vendor/bin/phpcs.bat",
+    "phpcs.standard": "Drupal,DrupalPractice",
+    "phpcbf.enable": true,
+    "phpcbf.documentFormattingProvider": true,
+    "phpcbf.onsave": true,
+    "phpcbf.standard": "Drupal,DrupalPractice",
+    "phpcbf.executablePath": "C:/Users/USUARIO/AppData/Roaming/Composer/vendor/bin/phpcbf.bat"
+   }
+   ```
+   Con ello configuraremos tanto phpcs y phpcbf para poder utilizar esas herramientas en vscode y que nos ayude a marcar los errores y a corregirlos.
+
+   > Tener en cuenta la dirección de los ejecutables de ambas herramientas, ya que es importante que queden correctamente la ubicación de estas, ya sea que esten de forma global en nuestro equipo o que se encuentre dentro de un proyecto en especifico
 
 # Adicionales
 

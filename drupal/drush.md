@@ -45,3 +45,8 @@ Es un shell de linea de comandos y una interfaz de scripting Unix para Drupal
     ```
 
 > Puede ver todos los comando que tiene drush los puede encontrar en [Drush Commands](https://drushcommands.com/) 
+
+> Fix: Cuando no carguen los estilos:
+> 
+> * drush -y config-set system.performance css.preprocess 0
+> * drush -y config-set system.performance js.preprocess 0
