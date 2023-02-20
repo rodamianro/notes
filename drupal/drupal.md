@@ -20,6 +20,7 @@ Apuntes sobre drupal
   - [Desde pantheon](#desde-pantheon)
     - [Descargas](#descargas)
     - [Configuración inicial](#configuración-inicial)
+    - [Configuración inicial con lando](#configuración-inicial-con-lando)
 - [Como Actualizar core de drupal con Composer](#como-actualizar-core-de-drupal-con-composer)
 - [Configuración de estandares de programación en el entorno local](#configuración-de-estandares-de-programación-en-el-entorno-local)
 - [Adicionales](#adicionales)
@@ -158,7 +159,8 @@ o más terminos.
     $ vendor/bin/drush cr
     $ vendor/bin/drush updb
     ```
-
+### Configuración inicial con lando
+Instalar proyecto: https://docs.lando.dev/getting-started/first-app.html
 # Como Actualizar core de drupal con Composer
 
 1.  Listar las actualizaciones disponibles para drupal

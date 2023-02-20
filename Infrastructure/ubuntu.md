@@ -70,6 +70,11 @@
   ```sh 
   # Battery status
   acpi -i -b
+  # IP address
+  hostname -I | cut -d' ' -f1
+  # Ports
+  sudo lsof -i -P -n
+  sudo lsof -i -P -n | grep LISTEN  
   ```
 # References
 
