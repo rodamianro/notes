@@ -15,7 +15,7 @@ $ sudo rm -rf /var/lib/docker
 $ sudo rm -rf /var/lib/containerd
 ```
 
-# Docker compose
+# [Docker compose](https://docs.docker.com/compose/compose-file/)
 
 ## Basic structure
 ```yml
@@ -31,7 +31,6 @@ networks:
     driver: bridge
 volumes:
   db-mysql:
-vu
 ```
 ## [Create mysql container](https://hub.docker.com/_/mysql)
 ```yml
@@ -88,6 +87,15 @@ networks:
   external:
     driver: bridge
 ```
+# Commands
+
+```sh
+# Export database from a mariadb container
+docker compose exec -i db-mariadb mysqldump -u root nivelic_acdi_voca_web > acdi.sql
+# See container info
+docker container inspect b13418867721
+```
+
 # References
 
 [1] https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04#step-3-using-the-docker-command
