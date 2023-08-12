@@ -1,10 +1,16 @@
 # Terminal y línea de comandos
+
 ## Terminal
+
 Es una interfaz gráfica que simula una línea de comandos.
 Cuando se habla de línea de comandos hace referencia a una shell
+
 ## Línea de comandos(Shell)
+
 Es un programa que toma comandos y los pasa al sistema operativo para hacer algo  
+
 ### Tipos de shell
+
 - Bourne shell
 - Bash shell
 - Z shell
@@ -12,13 +18,18 @@ Es un programa que toma comandos y los pasa al sistema operativo para hacer algo
 - Korn shell
 - Fish shell
 - PowerShell
-# Comando
+
+## Comando
+
 Un comando puede ser:
-* Un programa ejecutable
-* Un comando de utilidad de la shell
-* Una función de shell
-* Un alias
-## Comandos 
+
+- Un programa ejecutable
+- Un comando de utilidad de la shell
+- Una función de shell
+- Un alias
+
+## Comandos
+
 - ls: muestra el contenido de la carpeta ejm: ls -lh
 - cd: Cambiar de directorio, recibiendo como parametro el nombre de la carpeta a la que se quiere acceder ejemplo: cd picture
 - clear: Limpia la pantalla
@@ -41,35 +52,52 @@ Un comando puede ser:
 - man: Manual de un comando, man cd
 - info: Información de un comando, info cd
 - whatis: Información corta de un comando, whatis cd
-# Wildcards
+
+## Wildcards
+
 Caracteres que ayudan en las busquedas y filtrado de buscqueda
+
 - ls *.txt: busca todos los archivos que contenga al final .txt, ls datos* muestra todos los archivos que empiezan con datos
 - ls datos?: Busca todas las palabras que tengan datos al inicio y solo un caracter al final, para 3 caracteres seria ls datos???
 - ls [[:upper:]]*: Busca todos los contenidos que empiecen con mayusculas
 - ls [ad]*: Busca todos los archivos que empiezan con ab
-# Redirecciones
-## File Descriptor
+
+## Redirecciones
+
+### File Descriptor
+
 - 0: Standard input, salida de información para el input
 - 1: Standard output, salida de información para el output
 - 2: Standard error, salida de información para los errores
 
-## > 
+### \>
+
 Guarda el output de la operación en un un archivo, creándolo o si existe lo sobrescribe
+
 ```sh
 ls carpeta > listadoArchivos.txt
 ```
-## >> 
+
+## \>\>
+
 Guarda el output de la operación en un un archivo, concatena el contenido en el archivo
+
 ```sh
 ls carpeta2 >> listadoArchivos.txt
 ```
+
 ## 2>
+
 Guarda en un archivo el error que arroje la operación
-```
+
+```sh
 ls alskdjf 2> error.txt
 ```
+
 ## >> 2>&1
+
 Redireccionar un error y un output
+
 ```
 ls alsdkfj >> output.txt 2>&1
 ```
