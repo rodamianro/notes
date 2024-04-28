@@ -1,15 +1,19 @@
-# Tabla de contendio
-- [Tabla de contendio](#tabla-de-contendio)
+# MongoDB
+
+## Tabla de contendio
+
 - [MongoDB](#mongodb)
-- [MongoDB Atlas](#mongodb-atlas)
-- [Definiciones generales](#definiciones-generales)
+  - [Tabla de contendio](#tabla-de-contendio)
+  - [Definition](#definition)
+  - [MongoDB Atlas](#mongodb-atlas)
+  - [Definiciones generales](#definiciones-generales)
   - [Base de datos](#base-de-datos)
   - [Colecciones](#colecciones)
   - [Documentos](#documentos)
   - [JSON VS BSON](#json-vs-bson)
     - [JSON](#json)
     - [BSON](#bson)
-- [Operaciones](#operaciones)
+  - [Operations](#operations)
 - [Tipos de datos](#tipos-de-datos)
 - [Esquemas](#esquemas)
 - [Relaciones](#relaciones)
@@ -20,36 +24,52 @@
   - [Operadores para arreglos](#operadores-para-arreglos)
   - [Operadores para realizar Updates en arreglos](#operadores-para-realizar-updates-en-arreglos)
 - [Proyecciones](#proyecciones)
+  - [Exportar una base de datos](#exportar-una-base-de-datos)
+  - [Restaurar base de datos](#restaurar-base-de-datos)
 
-# MongoDB
+## Definition
+
 Es una base de datos no relacional basada en documentos.
+
 - Permite guardar estructuras tipo json (BSON)
 - Base de datos distribuida
 - Se puede escalar de forma horizontal
 - Es schema less, se pueden guardar docuemtos que no necesariamente tenga la misma estructura
 - Es de código abierto y gratis
-# MongoDB Atlas
-* Aprovisionamiento automático de clusters con MongoDB
-* Alta disponibilidad
-* Altamente escalable
-* Seguro
-* Disponible en AWS, GCP y Azure
-* Fácil monitoreo y optimización
-# Definiciones generales
+
+## MongoDB Atlas
+
+- Aprovisionamiento automático de clusters con MongoDB
+- Alta disponibilidad
+- Altamente escalable
+- Seguro
+- Disponible en AWS, GCP y Azure
+- Fácil monitoreo y optimización
+
+## Definiciones generales
+
 ## Base de datos
-* Es un contennedor físico de colecciones
-* Cada base de datos tiene su archivo propio en el sistema de archivos
-* Un cluster puede tener múltiples bases de datos
+
+- Es un contennedor físico de colecciones
+- Cada base de datos tiene su archivo propio en el sistema de archivos
+- Un cluster puede tener múltiples bases de datos
+
 ## Colecciones
-* Agrupación de documentos
-* Equivalente a una tabla en las bases de datos relacionales
-* No impone un esquema
+
+- Agrupación de documentos
+- Equivalente a una tabla en las bases de datos relacionales
+- No impone un esquema
+
 ## Documentos
-* Un registro dentro de una colección
-* Es análogo a un objeto JSON(BSON)
-* La unidad básica dentro de MongoDB
+
+- Un registro dentro de una colección
+- Es análogo a un objeto JSON(BSON)
+- La unidad básica dentro de MongoDB
+
 ## JSON VS BSON
+
 ### JSON
+
 ```json
 {
     "name": "Some name",
@@ -57,14 +77,21 @@ Es una base de datos no relacional basada en documentos.
     "nickName": "nickName"
 }
 ```
+
 ### BSON
+
 Codificación binaria de documentos JSON
-# Operaciones
-* Crear base de datos: 
+
+## Operations
+
+- Crear base de datos:
+  
     ```js
     use 'nombreDB'
     ```
-* .insertOne(): Insertar un elemento
+
+- .insertOne(): Insertar un elemento
+  
     ```js
     db.inventory.insertOne(
     { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } })
@@ -202,3 +229,14 @@ db.inventory.findOne({status: "A"}, {item:1, status:1})
 ```
 se usa 1 para indicar que lo traiga y 0 en caso contrario
 
+## Exportar una base de datos
+
+```sh
+mongodump --uri="[mongo_server_url]" --db [mongo_db_name] --out=[output_url]
+```
+
+## Restaurar base de datos
+
+```sh
+mongorestore -u [user] -p [password] --authenticationDatabase=admin ---host=[mongo_server_url] --port=[mongo_server_port] --db=[db_name] [backup_url]
+```
